@@ -3,13 +3,13 @@
 Calculator https://github.com/Lexxx42/calculator is now a telegram bot
 ---
 
-# used libraries
+## used libraries
 
 * https://docs.aiogram.dev/en/dev-3.x/
 
 ---
 
-# С чего начать?
+## С чего начать?
 
 1. добавляемся в разработчики в проект https://github.com/Lexxx42/calculator_bot_aiogram
 2. для этого надо мне прислать линк на профиль в гитхабе
