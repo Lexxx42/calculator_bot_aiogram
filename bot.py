@@ -3,8 +3,9 @@ import logging
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 from aiogram.types import Message
+from TOKEN import t
 
-TOKEN = "5877311920:AAFJkeE648i5XZlP2XoNnia_cqAq6yQx1fY"
+TOKEN = t
 dp = Dispatcher()
 
 logger = logging.getLogger(__name__)
