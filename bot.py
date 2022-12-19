@@ -4,9 +4,8 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
 from aiogram.types import Message
-from TOKEN import t
+import TOKEN
 
-TOKEN = t
 dp = Dispatcher()
 
 logger = logging.getLogger(__name__)
@@ -27,7 +26,7 @@ async def command_start_handler(message: Message) -> None:
 
 def main() -> None:
     # Initialize Bot instance with an default parse mode which will be passed to all API calls
-    bot = Bot(TOKEN, parse_mode="HTML")
+    bot = Bot(token=TOKEN.BOT_TOKEN, parse_mode="HTML")
     # And the run events dispatching
     dp.run_polling(bot)
 
