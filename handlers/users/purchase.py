@@ -25,7 +25,7 @@ async def my_callback_foo(call: CallbackQuery, callback_data: MyCallback):
                               reply_markup=apples_keyboard)
 
 
-@dp.callback_query(F.text == "pear")
+@dp.callback_query(MyCallback.filter(F.text == "pear"))
 async def buy_pear(call: CallbackQuery, callback_data: MyCallback):
     await call.answer(cache_time=15)
     logging.info(f"call = {callback_data}")
