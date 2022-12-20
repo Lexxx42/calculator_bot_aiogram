@@ -16,12 +16,12 @@ async def show_items(message: Message):
                          reply_markup=choice)
 
 
-@dp.callback_query(MyCallback.filter(F.text == "apple"))
+@dp.callback_query(MyCallback.filter(F.text == "apples"))
 async def my_callback_foo(call: CallbackQuery, callback_data: MyCallback):
     await call.answer(cache_time=15)
     logging.info(f"call = {callback_data}")
     quantity = callback_data.value
-    await call.message.answer(f"selected appes. Amount = {quantity}",
+    await call.message.answer(f"selected apples. Amount = {quantity}",
                               reply_markup=apples_keyboard)
 
 
