@@ -1,4 +1,4 @@
-from calculator_bot_aiogram.loader import bot
+from loader import bot
 
 if __name__ == "__main__":
     from handlers import dp
