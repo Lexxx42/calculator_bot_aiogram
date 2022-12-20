@@ -29,6 +29,5 @@ async def my_callback_foo(call: CallbackQuery, callback_data: MyCallback):
 async def buy_pear(call: CallbackQuery, callback_data: MyCallback):
     await call.answer(cache_time=15)
     logging.info(f"call = {callback_data}")
-
     await call.message.answer(text="selected pear",
                               reply_markup=pear_keyboard)
