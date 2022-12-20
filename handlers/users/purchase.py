@@ -17,18 +17,17 @@ async def show_items(message: Message):
 
 
 @dp.callback_query(MyCallback.filter(F.text == "apple"))
-async def buy_apples(call: CallbackQuery, callback_data: dict):
+async def my_callback_foo(call: CallbackQuery, callback_data: MyCallback):
     await call.answer(cache_time=15)
     logging.info(f"call = {callback_data}")
-    quantity = callback_data.get("value")
+    quantity = callback_data.value
     await call.message.answer(f"selected appes. Amount = {quantity}",
                               reply_markup=apples_keyboard)
 
 
 @dp.callback_query(F.text == "pear")
-async def buy_pear(call: CallbackQuery):
+async def buy_pear(call: CallbackQuery, callback_data: MyCallback):
     await call.answer(cache_time=15)
-    callback_data = call.data
     logging.info(f"call = {callback_data}")
 
     await call.message.answer(text="selected pear",
