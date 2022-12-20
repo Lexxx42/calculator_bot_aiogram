@@ -6,9 +6,5 @@ class MyCallback(CallbackData, prefix="my"):
     value: int
 
 
-class Function(CallbackData, prefix="fun"):
-    text: str
-
-
 class Operation(CallbackData, prefix="op"):
     text: str
