@@ -6,12 +6,9 @@ class MyCallback(CallbackData, prefix="my"):
     value: int
 
 
-# buy_callback = MyCallback(
-#     text="", value=0
-# )
+class Function(CallbackData, prefix="fun"):
+    text: str
 
-# buy_callback = CallbackData()
-# "buy", "item_name", "quantity"
-# 1 - тип, 2 - что сохранить в кнопке
-# "buy:item_name:2"
-# CallbackData()
+
+class Operation(CallbackData, prefix="op"):
+    text: str
