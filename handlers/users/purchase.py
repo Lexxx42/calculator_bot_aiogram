@@ -1,9 +1,10 @@
 import logging
 
+from aiogram import F
 from aiogram.filters import Command
 from aiogram.types import Message, CallbackQuery
 
-from calculator_bot_aiogram.keyboards.inline.callback_datas import buy_callback
+from calculator_bot_aiogram.keyboards.inline.callback_datas import MyCallback
 from calculator_bot_aiogram.keyboards.inline.choice_buttons import choice, pear_keyboard, apples_keyboard
 from calculator_bot_aiogram.loader import dp
 
@@ -15,7 +16,7 @@ async def show_items(message: Message):
                          reply_markup=choice)
 
 
-@dp.callback_query_handler(buy_callback.filter(text="apple"))
+@dp.callback_query(MyCallback.filter(F.text == "apple"))
 async def buy_apples(call: CallbackQuery, callback_data: dict):
     await call.answer(cache_time=15)
     logging.info(f"call = {callback_data}")
@@ -24,7 +25,7 @@ async def buy_apples(call: CallbackQuery, callback_data: dict):
                               reply_markup=apples_keyboard)
 
 
-@dp.callback_query_handler(text_contains="pear")
+@dp.callback_query(F.text == "pear")
 async def buy_pear(call: CallbackQuery):
     await call.answer(cache_time=15)
     callback_data = call.data

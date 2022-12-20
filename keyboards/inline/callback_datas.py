@@ -6,7 +6,10 @@ class MyCallback(CallbackData, prefix="my"):
     value: int
 
 
-buy_callback = MyCallback()
+# buy_callback = MyCallback(
+#     text="", value=0
+# )
+
 # buy_callback = CallbackData()
 # "buy", "item_name", "quantity"
 # 1 - тип, 2 - что сохранить в кнопке
