@@ -18,7 +18,7 @@ MESSAGE = "Input: "
 async def show_items(message: Message):
     global IS_FUNCTION_ADDED, ENTERED_DATA, ANSWER, MESSAGE
     IS_FUNCTION_ADDED, ENTERED_DATA, ANSWER, MESSAGE = (False, "", "", "Input: ")
-    await message.answer(text=f"Simple calculator. Working with <b>two</b> numbers.", reply_markup=choice)
+    await message.answer(text="Simple calculator. Working with <b>two</b> numbers.", reply_markup=choice)
 
 
 @dp.callback_query(MyCallback.filter(F.text == "0"))
@@ -162,3 +162,9 @@ async def sent_callback_data(call, callback_data_text):
         logging.info(f"new MESSAGE = {MESSAGE}")
         ANSWER = await call.message.answer(text=MESSAGE)
         logging.info(f"new ANSWER = {ANSWER}")
+
+
+@dp.message()
+async def echo(message: Message):
+    await message.answer(text="""use /start to use bot and to create a new calc instance.
+input works only from inline keyboard.""")
