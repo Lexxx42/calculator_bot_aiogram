@@ -1,6 +1,6 @@
 """ This file is for user interface. Developed by Alexander Konukhov. """
 import sys
-from excep import *
+from calculator_bot_aiogram.calc.excep import *
 from main import main
 
 # добавлены глобальные переменные для передачи значений
