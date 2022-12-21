@@ -10,7 +10,7 @@ choice = InlineKeyboardMarkup(
             InlineKeyboardButton(text="9", callback_data=MyCallback(text="9", value=9).pack()),
             InlineKeyboardButton(text="C", callback_data=Operation(text="C").pack()),
             InlineKeyboardButton(text="+/-", callback_data=Operation(text="+/-").pack()),
-            InlineKeyboardButton(text="sqrl", callback_data=Operation(text=" sqrt ").pack()),
+            InlineKeyboardButton(text="sqrt", callback_data=Operation(text=" sqrt ").pack()),
         ],
         [  # 2 row
             InlineKeyboardButton(text="4", callback_data=MyCallback(text="4", value=4).pack()),
