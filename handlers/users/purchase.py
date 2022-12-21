@@ -162,6 +162,24 @@ async def my_callback_foo(call: CallbackQuery, callback_data: Operation):
         await call.answer(cache_time=1)
 
 
+@dp.callback_query(Operation.filter(F.text == "C"))
+async def my_callback_foo(call: CallbackQuery, callback_data: Operation):
+    if ENTERED_DATA != "":
+        logging.info(f"call = {callback_data}")
+        await sent_callback_data(call, callback_data.text)
+    else:
+        await call.answer(cache_time=1)
+
+
+@dp.callback_query(Operation.filter(F.text == "+/-"))
+async def my_callback_foo(call: CallbackQuery, callback_data: Operation):
+    if ENTERED_DATA != "":
+        logging.info(f"call = {callback_data}")
+        await sent_callback_data(call, callback_data.text)
+    else:
+        await call.answer(cache_time=1)
+
+
 async def sent_callback_data(call, callback_data_text):
     global ENTERED_DATA, ANSWER, MESSAGE, IS_FIRST_MESSAGE, IS_FUNCTION_ADDED
     await call.answer(cache_time=1)
@@ -176,6 +194,26 @@ async def sent_callback_data(call, callback_data_text):
         logging.info(f"new ANSWER = {ANSWER}")
         if callback_data_text not in ["+", "-", "/", "//", "%", "pow", "*"]:
             IS_FUNCTION_ADDED = False
+        await ANSWER.edit_text(text=MESSAGE)
+    elif ENTERED_DATA != "" and callback_data_text == "C":
+        logging.info(f"call = {callback_data_text}")
+        ENTERED_DATA = ""
+        logging.info(f"new ENTERED_DATA = {ENTERED_DATA}")
+        MESSAGE = "Input: "
+        logging.info(f"new MESSAGE = {MESSAGE}")
+        logging.info(f"new ANSWER = {ANSWER}")
+        IS_FUNCTION_ADDED = False
+        await ANSWER.edit_text(text=MESSAGE)
+    elif ENTERED_DATA != "" and callback_data_text == "+/-":
+        logging.info(f"call = {callback_data_text}")
+        ENTERED_DATA = str(int(ENTERED_DATA.split()[0]) * -1)
+        logging.info(f"new ENTERED_DATA = {ENTERED_DATA}")
+        temp_message = MESSAGE.split()
+        temp_message[1] = ENTERED_DATA
+        MESSAGE = ' '.join(temp_message) + ' '
+        logging.info(f"new MESSAGE = {MESSAGE}")
+        logging.info(f"new ANSWER = {ANSWER}")
+        IS_FUNCTION_ADDED = False
         await ANSWER.edit_text(text=MESSAGE)
     elif ENTERED_DATA != "" and callback_data_text != "H":
         ENTERED_DATA += callback_data_text

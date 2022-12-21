@@ -1,4 +1,5 @@
-a = "0001"
-a = a[:-1]
+a = "0001 + "
+b = a.split()
 
 print(a)
+print(b)
