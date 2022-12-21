@@ -1,2 +1,2 @@
-a = "1.1 + 10"
-print(a.split())
+a = "0001"
+print(float(a))

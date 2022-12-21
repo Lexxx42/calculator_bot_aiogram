@@ -18,7 +18,7 @@ MESSAGE = "Input: "
 async def show_items(message: Message):
     global IS_FUNCTION_ADDED, ENTERED_DATA, ANSWER, MESSAGE
     IS_FUNCTION_ADDED, ENTERED_DATA, ANSWER, MESSAGE = (False, "", "", "Input: ")
-    await message.answer(text="Simple calculator", reply_markup=choice)
+    await message.answer(text=f"Simple calculator. Working with <b>two</b> numbers.", reply_markup=choice)
 
 
 @dp.callback_query(MyCallback.filter(F.text == "0"))
