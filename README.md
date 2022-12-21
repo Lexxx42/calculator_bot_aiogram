@@ -22,6 +22,8 @@ Calculator https://github.com/Lexxx42/calculator is now a telegram bot
 9. создать в корне проекта файл .env
 10. вставить в .env строку: BOT_TOKEN=ВАШ_ТОКЕН_ТЕЛЕГРАМА, где ВАШ_ТОКЕН_ТЕЛЕГРАМА - токен бота, который получен от
     бота-отца.
-Пример: ``` shell
+
+*Пример:*
+``` shell
 BOT_TOKEN=ВАШ_ТОКЕН_ТЕЛЕГРАМА  
 ```
