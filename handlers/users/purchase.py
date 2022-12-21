@@ -8,9 +8,10 @@ from calculator_bot_aiogram.keyboards.inline.callback_datas import MyCallback, O
 from calculator_bot_aiogram.keyboards.inline.choice_buttons import choice
 from calculator_bot_aiogram.loader import dp
 
+IS_FUNCTION_ADDED = False
 ENTERED_DATA = ''
 ANSWER = ""
-MESSAGE = "Entered number = "
+MESSAGE = "Input: "
 
 
 @dp.message(Command("start"))
@@ -68,33 +69,43 @@ async def my_callback_foo(call: CallbackQuery, callback_data: MyCallback):
     await sent_callback_data(call, callback_data.text)
 
 
-@dp.callback_query(Operation.filter(F.text == "+"))
+@dp.callback_query(Operation.filter(F.text == " + "))
 async def my_callback_foo(call: CallbackQuery, callback_data: MyCallback):
-    if "+" not in ENTERED_DATA:
+    global IS_FUNCTION_ADDED
+    if "+" not in ENTERED_DATA and not IS_FUNCTION_ADDED:
+        IS_FUNCTION_ADDED = True
         await sent_callback_data(call, callback_data.text)
 
 
-@dp.callback_query(Operation.filter(F.text == "-"))
+@dp.callback_query(Operation.filter(F.text == " - "))
 async def my_callback_foo(call: CallbackQuery, callback_data: MyCallback):
-    if "-" not in ENTERED_DATA:
+    global IS_FUNCTION_ADDED
+    if "-" not in ENTERED_DATA and not IS_FUNCTION_ADDED:
+        IS_FUNCTION_ADDED = True
         await sent_callback_data(call, callback_data.text)
 
 
-@dp.callback_query(Operation.filter(F.text == "*"))
+@dp.callback_query(Operation.filter(F.text == " * "))
 async def my_callback_foo(call: CallbackQuery, callback_data: MyCallback):
-    if "*" not in ENTERED_DATA:
+    global IS_FUNCTION_ADDED
+    if "*" not in ENTERED_DATA and not IS_FUNCTION_ADDED:
+        IS_FUNCTION_ADDED = True
         await sent_callback_data(call, callback_data.text)
 
 
-@dp.callback_query(Operation.filter(F.text == "/"))
+@dp.callback_query(Operation.filter(F.text == " / "))
 async def my_callback_foo(call: CallbackQuery, callback_data: MyCallback):
-    if "/" not in ENTERED_DATA:
+    global IS_FUNCTION_ADDED
+    if "/" not in ENTERED_DATA and not IS_FUNCTION_ADDED:
+        IS_FUNCTION_ADDED = True
         await sent_callback_data(call, callback_data.text)
 
 
-@dp.callback_query(Operation.filter(F.text == "//"))
+@dp.callback_query(Operation.filter(F.text == " // "))
 async def my_callback_foo(call: CallbackQuery, callback_data: MyCallback):
-    if "//" not in ENTERED_DATA:
+    global IS_FUNCTION_ADDED
+    if "//" not in ENTERED_DATA and not IS_FUNCTION_ADDED:
+        IS_FUNCTION_ADDED = True
         await sent_callback_data(call, callback_data.text)
 
 
@@ -104,21 +115,27 @@ async def my_callback_foo(call: CallbackQuery, callback_data: MyCallback):
         await sent_callback_data(call, callback_data.text)
 
 
-@dp.callback_query(Operation.filter(F.text == "%"))
+@dp.callback_query(Operation.filter(F.text == " % "))
 async def my_callback_foo(call: CallbackQuery, callback_data: MyCallback):
-    if "%" not in ENTERED_DATA:
+    global IS_FUNCTION_ADDED
+    if "%" not in ENTERED_DATA and not IS_FUNCTION_ADDED:
+        IS_FUNCTION_ADDED = True
         await sent_callback_data(call, callback_data.text)
 
 
-@dp.callback_query(Operation.filter(F.text == "pow"))
+@dp.callback_query(Operation.filter(F.text == " pow "))
 async def my_callback_foo(call: CallbackQuery, callback_data: MyCallback):
-    if "pow" not in ENTERED_DATA:
+    global IS_FUNCTION_ADDED
+    if "pow" not in ENTERED_DATA and not IS_FUNCTION_ADDED:
+        IS_FUNCTION_ADDED = True
         await sent_callback_data(call, callback_data.text)
 
 
-@dp.callback_query(Operation.filter(F.text == "sqrt"))
+@dp.callback_query(Operation.filter(F.text == " sqrt "))
 async def my_callback_foo(call: CallbackQuery, callback_data: MyCallback):
-    if "sqrt" not in ENTERED_DATA:
+    global IS_FUNCTION_ADDED
+    if "sqrt" not in ENTERED_DATA and not IS_FUNCTION_ADDED:
+        IS_FUNCTION_ADDED = True
         await sent_callback_data(call, callback_data.text)
 
 
