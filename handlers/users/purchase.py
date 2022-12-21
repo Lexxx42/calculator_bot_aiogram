@@ -12,6 +12,7 @@ IS_FUNCTION_ADDED = False
 ENTERED_DATA = ''
 ANSWER = ""
 MESSAGE = "Input: "
+IS_FIRST_MESSAGE = True
 
 
 @dp.message(Command("start"))
@@ -72,96 +73,133 @@ async def my_callback_foo(call: CallbackQuery, callback_data: MyCallback):
 
 
 @dp.callback_query(Operation.filter(F.text == " + "))
-async def my_callback_foo(call: CallbackQuery, callback_data: MyCallback):
+async def my_callback_foo(call: CallbackQuery, callback_data: Operation):
     global IS_FUNCTION_ADDED
     if "+" not in ENTERED_DATA and not IS_FUNCTION_ADDED:
         IS_FUNCTION_ADDED = True
         await sent_callback_data(call, callback_data.text)
+    else:
+        await call.answer(cache_time=1)
 
 
 @dp.callback_query(Operation.filter(F.text == " - "))
-async def my_callback_foo(call: CallbackQuery, callback_data: MyCallback):
+async def my_callback_foo(call: CallbackQuery, callback_data: Operation):
     global IS_FUNCTION_ADDED
     if "-" not in ENTERED_DATA and not IS_FUNCTION_ADDED:
         IS_FUNCTION_ADDED = True
         await sent_callback_data(call, callback_data.text)
+    else:
+        await call.answer(cache_time=1)
 
 
 @dp.callback_query(Operation.filter(F.text == " * "))
-async def my_callback_foo(call: CallbackQuery, callback_data: MyCallback):
+async def my_callback_foo(call: CallbackQuery, callback_data: Operation):
     global IS_FUNCTION_ADDED
     if "*" not in ENTERED_DATA and not IS_FUNCTION_ADDED:
         IS_FUNCTION_ADDED = True
         await sent_callback_data(call, callback_data.text)
+    else:
+        await call.answer(cache_time=1)
 
 
 @dp.callback_query(Operation.filter(F.text == " / "))
-async def my_callback_foo(call: CallbackQuery, callback_data: MyCallback):
+async def my_callback_foo(call: CallbackQuery, callback_data: Operation):
     global IS_FUNCTION_ADDED
     if "/" not in ENTERED_DATA and not IS_FUNCTION_ADDED:
         IS_FUNCTION_ADDED = True
         await sent_callback_data(call, callback_data.text)
+    else:
+        await call.answer(cache_time=1)
 
 
 @dp.callback_query(Operation.filter(F.text == " // "))
-async def my_callback_foo(call: CallbackQuery, callback_data: MyCallback):
+async def my_callback_foo(call: CallbackQuery, callback_data: Operation):
     global IS_FUNCTION_ADDED
     if "//" not in ENTERED_DATA and not IS_FUNCTION_ADDED:
         IS_FUNCTION_ADDED = True
         await sent_callback_data(call, callback_data.text)
+    else:
+        await call.answer(cache_time=1)
 
 
 @dp.callback_query(Operation.filter(F.text == "."))
-async def my_callback_foo(call: CallbackQuery, callback_data: MyCallback):
+async def my_callback_foo(call: CallbackQuery, callback_data: Operation):
     input_list = ENTERED_DATA.split()
     if "." not in input_list[0]:
+        await call.answer(cache_time=1)
         await sent_callback_data(call, callback_data.text)
     elif '.' in input_list[0] and "." not in input_list[len(input_list) - 1]:
+        await call.answer(cache_time=1)
         await sent_callback_data(call, callback_data.text)
 
 
 @dp.callback_query(Operation.filter(F.text == " % "))
-async def my_callback_foo(call: CallbackQuery, callback_data: MyCallback):
+async def my_callback_foo(call: CallbackQuery, callback_data: Operation):
     global IS_FUNCTION_ADDED
     if "%" not in ENTERED_DATA and not IS_FUNCTION_ADDED:
         IS_FUNCTION_ADDED = True
         await sent_callback_data(call, callback_data.text)
+    else:
+        await call.answer(cache_time=1)
 
 
 @dp.callback_query(Operation.filter(F.text == " pow "))
-async def my_callback_foo(call: CallbackQuery, callback_data: MyCallback):
+async def my_callback_foo(call: CallbackQuery, callback_data: Operation):
     global IS_FUNCTION_ADDED
     if "pow" not in ENTERED_DATA and not IS_FUNCTION_ADDED:
         IS_FUNCTION_ADDED = True
         await sent_callback_data(call, callback_data.text)
+    else:
+        await call.answer(cache_time=1)
 
 
-@dp.callback_query(Operation.filter(F.text == " sqrt "))
-async def my_callback_foo(call: CallbackQuery, callback_data: MyCallback):
-    global IS_FUNCTION_ADDED
-    if "sqrt" not in ENTERED_DATA and not IS_FUNCTION_ADDED:
-        IS_FUNCTION_ADDED = True
+@dp.callback_query(Operation.filter(F.text == "H"))
+async def my_callback_foo(call: CallbackQuery, callback_data: Operation):
+    if ENTERED_DATA != "":
+        logging.info(f"call = {callback_data}")
         await sent_callback_data(call, callback_data.text)
+    else:
+        await call.answer(cache_time=1)
 
 
 async def sent_callback_data(call, callback_data_text):
-    global ENTERED_DATA, ANSWER, MESSAGE
+    global ENTERED_DATA, ANSWER, MESSAGE, IS_FIRST_MESSAGE, IS_FUNCTION_ADDED
     await call.answer(cache_time=1)
     logging.info(f"call = {callback_data_text}")
-    if ENTERED_DATA != "":
+    if ENTERED_DATA != "" and callback_data_text == "H":
+        logging.info(f"call = {callback_data_text}")
+        ENTERED_DATA = ENTERED_DATA.strip()[:-1]
+        logging.info(f"new ENTERED_DATA = {ENTERED_DATA}")
+        MESSAGE = "Input: "
+        MESSAGE += ENTERED_DATA
+        logging.info(f"new MESSAGE = {MESSAGE}")
+        logging.info(f"new ANSWER = {ANSWER}")
+        if callback_data_text not in ["+", "-", "/", "//", "%", "pow", "*"]:
+            IS_FUNCTION_ADDED = False
+        await ANSWER.edit_text(text=MESSAGE)
+    elif ENTERED_DATA != "" and callback_data_text != "H":
         ENTERED_DATA += callback_data_text
         logging.info(f"new ENTERED_DATA = {ENTERED_DATA}")
         MESSAGE += callback_data_text
         await ANSWER.edit_text(text=MESSAGE)
         logging.info(f"new MESSAGE = {MESSAGE}")
         logging.info(f"answer edit = {ANSWER}")
-    else:
+    elif ENTERED_DATA == "" and IS_FIRST_MESSAGE:
         ENTERED_DATA += callback_data_text
         logging.info(f"new ENTERED_DATA = {ENTERED_DATA}")
         MESSAGE += callback_data_text
         logging.info(f"new MESSAGE = {MESSAGE}")
         ANSWER = await call.message.answer(text=MESSAGE)
         logging.info(f"new ANSWER = {ANSWER}")
+        IS_FIRST_MESSAGE = False
+    elif ENTERED_DATA == "" and not IS_FIRST_MESSAGE:
+        ENTERED_DATA += callback_data_text
+        logging.info(f"new ENTERED_DATA = {ENTERED_DATA}")
+        MESSAGE += callback_data_text
+        logging.info(f"new MESSAGE = {MESSAGE}")
+        await ANSWER.edit_text(text=MESSAGE)
+        logging.info(f"new ANSWER = {ANSWER}")
+        IS_FIRST_MESSAGE = False
 
 
 @dp.message()

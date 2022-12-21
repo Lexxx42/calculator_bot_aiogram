@@ -1,2 +1,4 @@
 a = "0001"
-print(float(a))
+a = a[:-1]
+
+print(a)
