@@ -16,6 +16,8 @@ MESSAGE = "Input: "
 
 @dp.message(Command("start"))
 async def show_items(message: Message):
+    global IS_FUNCTION_ADDED, ENTERED_DATA, ANSWER, MESSAGE
+    IS_FUNCTION_ADDED, ENTERED_DATA, ANSWER, MESSAGE = (False, "", "", "Input: ")
     await message.answer(text="Simple calculator", reply_markup=choice)
 
 
