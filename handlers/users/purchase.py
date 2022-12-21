@@ -113,7 +113,10 @@ async def my_callback_foo(call: CallbackQuery, callback_data: MyCallback):
 
 @dp.callback_query(Operation.filter(F.text == "."))
 async def my_callback_foo(call: CallbackQuery, callback_data: MyCallback):
-    if "." not in ENTERED_DATA:
+    input_list = ENTERED_DATA.split()
+    if "." not in input_list[0]:
+        await sent_callback_data(call, callback_data.text)
+    elif '.' in input_list[0] and "." not in input_list[len(input_list) - 1]:
         await sent_callback_data(call, callback_data.text)
 
 
