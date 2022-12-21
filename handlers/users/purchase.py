@@ -125,12 +125,15 @@ async def my_callback_foo(call: CallbackQuery, callback_data: Operation):
 @dp.callback_query(Operation.filter(F.text == "."))
 async def my_callback_foo(call: CallbackQuery, callback_data: Operation):
     input_list = ENTERED_DATA.split()
-    if "." not in input_list[0]:
+    if ENTERED_DATA == "":
         await call.answer(cache_time=1)
-        await sent_callback_data(call, callback_data.text)
-    elif '.' in input_list[0] and "." not in input_list[len(input_list) - 1]:
-        await call.answer(cache_time=1)
-        await sent_callback_data(call, callback_data.text)
+    else:
+        if "." not in input_list[0]:
+            await call.answer(cache_time=1)
+            await sent_callback_data(call, callback_data.text)
+        elif '.' in input_list[0] and "." not in input_list[len(input_list) - 1]:
+            await call.answer(cache_time=1)
+            await sent_callback_data(call, callback_data.text)
 
 
 @dp.callback_query(Operation.filter(F.text == " % "))
@@ -206,15 +209,43 @@ async def sent_callback_data(call, callback_data_text):
         await ANSWER.edit_text(text=MESSAGE)
     elif ENTERED_DATA != "" and callback_data_text == "+/-":
         logging.info(f"call = {callback_data_text}")
-        ENTERED_DATA = str(int(ENTERED_DATA.split()[0]) * -1)
-        logging.info(f"new ENTERED_DATA = {ENTERED_DATA}")
-        temp_message = MESSAGE.split()
-        temp_message[1] = ENTERED_DATA
-        MESSAGE = ' '.join(temp_message) + ' '
-        logging.info(f"new MESSAGE = {MESSAGE}")
-        logging.info(f"new ANSWER = {ANSWER}")
-        IS_FUNCTION_ADDED = False
-        await ANSWER.edit_text(text=MESSAGE)
+        data_list = ENTERED_DATA.split()
+        if len(data_list) < 2:
+            ENTERED_DATA = str(float(data_list[0]) * -1)
+            logging.info(f"new ENTERED_DATA = {ENTERED_DATA}")
+            temp_message = MESSAGE.split()
+            temp_message[1] = ENTERED_DATA
+            MESSAGE = ' '.join(temp_message)
+            logging.info(f"new MESSAGE = {MESSAGE}")
+            logging.info(f"new ANSWER = {ANSWER}")
+            temp = MESSAGE.split()
+            ENTERED_DATA = temp[1]
+            logging.info(f"new ANSWER = {ENTERED_DATA}")
+            await ANSWER.edit_text(text=MESSAGE)
+        elif len(data_list) == 2:
+            ENTERED_DATA = str(float(data_list[0]) * -1)
+            logging.info(f"new ENTERED_DATA = {ENTERED_DATA}")
+            temp_message = MESSAGE.split()
+            temp_message[1] = ENTERED_DATA
+            MESSAGE = ' '.join(temp_message) + ' '
+            logging.info(f"new MESSAGE = {MESSAGE}")
+            logging.info(f"new ANSWER = {ANSWER}")
+            temp = MESSAGE.split()
+            ENTERED_DATA = temp[1]
+            logging.info(f"new ANSWER = {ENTERED_DATA}")
+            await ANSWER.edit_text(text=MESSAGE)
+        elif len(data_list) == 3:
+            ENTERED_DATA = str(float(data_list[2]) * -1)
+            logging.info(f"new ENTERED_DATA = {ENTERED_DATA}")
+            temp_message = MESSAGE.split()
+            temp_message[3] = ENTERED_DATA
+            MESSAGE = ' '.join(temp_message)
+            logging.info(f"new MESSAGE = {MESSAGE}")
+            logging.info(f"new ANSWER = {ANSWER}")
+            temp = MESSAGE.split()
+            ENTERED_DATA = temp[1] + ' ' + temp[2] + ' ' + temp[3]
+            logging.info(f"new ANSWER = {ENTERED_DATA}")
+            await ANSWER.edit_text(text=MESSAGE)
     elif ENTERED_DATA != "" and callback_data_text != "H":
         ENTERED_DATA += callback_data_text
         logging.info(f"new ENTERED_DATA = {ENTERED_DATA}")
