@@ -3,11 +3,11 @@ from calculator_bot_aiogram.loader import bot
 from aiogram import F
 from aiogram.filters import Command
 from aiogram.types import Message, CallbackQuery, Update
-
 from calculator_bot_aiogram.calc.controller import send_to_controller
 from calculator_bot_aiogram.keyboards.inline.callback_datas import MyCallback, Operation
 from calculator_bot_aiogram.keyboards.inline.choice_buttons import choice
 from calculator_bot_aiogram.loader import dp
+import aiohttp
 
 IS_FUNCTION_ADDED = False
 ENTERED_DATA = ''
@@ -76,7 +76,7 @@ async def my_callback_foo(call: CallbackQuery, callback_data: MyCallback):
 @dp.callback_query(Operation.filter(F.text == " + "))
 async def my_callback_foo(call: CallbackQuery, callback_data: Operation):
     global IS_FUNCTION_ADDED
-    if "+" not in ENTERED_DATA and not IS_FUNCTION_ADDED:
+    if not IS_FUNCTION_ADDED:
         IS_FUNCTION_ADDED = True
         await sent_callback_data(call, callback_data.text)
     else:
@@ -86,7 +86,7 @@ async def my_callback_foo(call: CallbackQuery, callback_data: Operation):
 @dp.callback_query(Operation.filter(F.text == " - "))
 async def my_callback_foo(call: CallbackQuery, callback_data: Operation):
     global IS_FUNCTION_ADDED
-    if "-" not in ENTERED_DATA and not IS_FUNCTION_ADDED:
+    if not IS_FUNCTION_ADDED:
         IS_FUNCTION_ADDED = True
         await sent_callback_data(call, callback_data.text)
     else:
@@ -96,7 +96,7 @@ async def my_callback_foo(call: CallbackQuery, callback_data: Operation):
 @dp.callback_query(Operation.filter(F.text == " * "))
 async def my_callback_foo(call: CallbackQuery, callback_data: Operation):
     global IS_FUNCTION_ADDED
-    if "*" not in ENTERED_DATA and not IS_FUNCTION_ADDED:
+    if not IS_FUNCTION_ADDED:
         IS_FUNCTION_ADDED = True
         await sent_callback_data(call, callback_data.text)
     else:
@@ -106,7 +106,7 @@ async def my_callback_foo(call: CallbackQuery, callback_data: Operation):
 @dp.callback_query(Operation.filter(F.text == " / "))
 async def my_callback_foo(call: CallbackQuery, callback_data: Operation):
     global IS_FUNCTION_ADDED
-    if "/" not in ENTERED_DATA and not IS_FUNCTION_ADDED:
+    if not IS_FUNCTION_ADDED:
         IS_FUNCTION_ADDED = True
         await sent_callback_data(call, callback_data.text)
     else:
@@ -116,7 +116,7 @@ async def my_callback_foo(call: CallbackQuery, callback_data: Operation):
 @dp.callback_query(Operation.filter(F.text == " // "))
 async def my_callback_foo(call: CallbackQuery, callback_data: Operation):
     global IS_FUNCTION_ADDED
-    if "//" not in ENTERED_DATA and not IS_FUNCTION_ADDED:
+    if not IS_FUNCTION_ADDED:
         IS_FUNCTION_ADDED = True
         await sent_callback_data(call, callback_data.text)
     else:
@@ -200,9 +200,21 @@ async def sent_callback_data(call, callback_data_text):
     if ENTERED_DATA != "" and callback_data_text == "=":
         user_input = ENTERED_DATA.split()
         await call.answer(cache_time=1)
-        if float(user_input[2]) == 0 and user_input[1] in ['/', '//', '%']:
+        try:
+            first_number = float(user_input[0])
+            logging.info(f"first_number = {first_number}")
+            second_number = float(user_input[2])
+            logging.info(f"second_number = {second_number}")
+        except ValueError as e:
+            logging.info(f"ValueError = {e}")
+            await ANSWER.edit_text(text="Input data is incorrect")
+            logging.info(f"ANSWER = {ANSWER}")
+            await error(ANSWER)
+            return
+        if second_number == 0 and user_input[1] in ['/', '//', '%']:
             await ANSWER.edit_text(text="Division or modulo by zero")
             await error(ANSWER)
+            logging.info(f"error = {ANSWER}")
         else:
             controller_answer = send_to_controller(user_input[0], user_input[1], user_input[2])
             logging.info(f"data sent to controller = {(user_input[0], user_input[1], user_input[2])}")
