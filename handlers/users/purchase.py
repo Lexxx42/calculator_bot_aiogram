@@ -1,5 +1,5 @@
 import logging
-
+from calculator_bot_aiogram.loader import bot
 from aiogram import F
 from aiogram.filters import Command
 from aiogram.types import Message, CallbackQuery, Update
@@ -186,11 +186,11 @@ async def my_callback_foo(call: CallbackQuery, callback_data: Operation):
 
 @dp.callback_query(Operation.filter(F.text == "="))
 async def my_callback_foo(call: CallbackQuery, callback_data: Operation):
-    if ENTERED_DATA != "":
+    if len(ENTERED_DATA.split()) < 3:
+        await call.answer(cache_time=1)
+    else:
         logging.info(f"call = {callback_data}")
         await sent_callback_data(call, callback_data.text)
-    else:
-        await call.answer(cache_time=1)
 
 
 async def sent_callback_data(call, callback_data_text):
@@ -200,20 +200,20 @@ async def sent_callback_data(call, callback_data_text):
     if ENTERED_DATA != "" and callback_data_text == "=":
         user_input = ENTERED_DATA.split()
         await call.answer(cache_time=1)
-        if len(user_input) < 3:
+        if float(user_input[2]) == 0 and user_input[1] in ['/', '//', '%']:
             await ANSWER.edit_text(text="Division or modulo by zero")
-            await error()
-        elif float(user_input[2]) == 0:
-            await ANSWER.edit_text(text="Equation isn't complete")
-            await error()
-        controller_answer = send_to_controller(ENTERED_DATA)
-        logging.info(f"controller answer = {controller_answer}")
-        MESSAGE = "Return = "
-        MESSAGE += controller_answer
-        logging.info(f"new MESSAGE = {MESSAGE}")
-        logging.info(f"new ANSWER = {ANSWER}")
-        await ANSWER.edit_text(text=MESSAGE)
-        await error()
+            await error(ANSWER)
+        else:
+            controller_answer = send_to_controller(user_input[0], user_input[1], user_input[2])
+            logging.info(f"data sent to controller = {(user_input[0], user_input[1], user_input[2])}")
+            logging.info(f"controller answer = {controller_answer}")
+            MESSAGE = "Return = "
+            MESSAGE += controller_answer
+            logging.info(f"new MESSAGE = {MESSAGE}")
+            logging.info(f"new ANSWER = {ANSWER}")
+            await ANSWER.edit_text(text=MESSAGE)
+            await call.answer(cache_time=1)
+            await error(ANSWER)
     elif ENTERED_DATA != "" and callback_data_text == "H":
         logging.info(f"call = {callback_data_text}")
         ENTERED_DATA = ENTERED_DATA.strip()[:-1]
@@ -299,24 +299,12 @@ async def sent_callback_data(call, callback_data_text):
 
 
 @dp.message()
-async def echo(message: Message):
+async def error(message):
     global ENTERED_DATA, ANSWER, MESSAGE, IS_FIRST_MESSAGE, IS_FUNCTION_ADDED
     IS_FUNCTION_ADDED = False
     ENTERED_DATA = ''
     ANSWER = ""
     MESSAGE = "Input: "
     IS_FIRST_MESSAGE = True
-    await message.answer(text="""use /start to use bot and to create a new calc instance.
-input works only from inline keyboard.""")
-
-
-@dp.message()
-async def error():
-    global ENTERED_DATA, ANSWER, MESSAGE, IS_FIRST_MESSAGE, IS_FUNCTION_ADDED
-    IS_FUNCTION_ADDED = False
-    ENTERED_DATA = ''
-    ANSWER = ""
-    MESSAGE = "Input: "
-    IS_FIRST_MESSAGE = True
-    await dp.send_message("""use /start to use bot and to create a new calc instance.
+    await bot.send_message(message.chat.id, """use /start to use bot and to create a new calc instance.
 input works only from inline keyboard.""")
