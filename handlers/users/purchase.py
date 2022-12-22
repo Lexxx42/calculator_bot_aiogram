@@ -18,8 +18,8 @@ IS_FIRST_MESSAGE = True
 
 @dp.message(Command("start"))
 async def show_items(message: Message):
-    global IS_FUNCTION_ADDED, ENTERED_DATA, ANSWER, MESSAGE
-    IS_FUNCTION_ADDED, ENTERED_DATA, ANSWER, MESSAGE = (False, "", "", "Input: ")
+    global IS_FUNCTION_ADDED, ENTERED_DATA, ANSWER, MESSAGE, IS_FIRST_MESSAGE
+    IS_FUNCTION_ADDED, ENTERED_DATA, ANSWER, MESSAGE, IS_FIRST_MESSAGE = (False, "", "", "Input: ", True)
     await message.answer(text="Simple calculator. Working with <b>two</b> numbers.", reply_markup=choice)
 
 
