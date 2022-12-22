@@ -4,7 +4,11 @@ import logging
 
 bot = Bot(token=TOKEN.BOT_TOKEN, parse_mode="HTML")
 dp = Dispatcher()
-logging.basicConfig(filename="my_log.log",
-                    format=u'%(filename)s [LINE:%(lineno)d] #%(levelname)-8s [%(asctime)s]  %(message)s',
-                    level=logging.INFO,
-                    )
+
+logging.basicConfig(
+    format=u'%(filename)s [LINE:%(lineno)d] #%(levelname)-8s [%(asctime)s]  %(message)s',
+    handlers=[
+        logging.FileHandler("my_log.log", mode='w'),
+        logging.StreamHandler()],
+    level=logging.INFO,
+)
