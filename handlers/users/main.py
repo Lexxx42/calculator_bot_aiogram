@@ -75,7 +75,7 @@ async def my_callback_foo(call: CallbackQuery, callback_data: MyCallback):
 @dp.callback_query(Operation.filter(F.text == " + "))
 async def my_callback_foo(call: CallbackQuery, callback_data: Operation):
     global IS_FUNCTION_ADDED
-    if not IS_FUNCTION_ADDED:
+    if not IS_FUNCTION_ADDED and ENTERED_DATA != "":
         IS_FUNCTION_ADDED = True
         await sent_callback_data(call, callback_data.text)
     else:
@@ -85,7 +85,7 @@ async def my_callback_foo(call: CallbackQuery, callback_data: Operation):
 @dp.callback_query(Operation.filter(F.text == " - "))
 async def my_callback_foo(call: CallbackQuery, callback_data: Operation):
     global IS_FUNCTION_ADDED
-    if not IS_FUNCTION_ADDED:
+    if not IS_FUNCTION_ADDED and ENTERED_DATA != "":
         IS_FUNCTION_ADDED = True
         await sent_callback_data(call, callback_data.text)
     else:
@@ -95,7 +95,7 @@ async def my_callback_foo(call: CallbackQuery, callback_data: Operation):
 @dp.callback_query(Operation.filter(F.text == " * "))
 async def my_callback_foo(call: CallbackQuery, callback_data: Operation):
     global IS_FUNCTION_ADDED
-    if not IS_FUNCTION_ADDED:
+    if not IS_FUNCTION_ADDED and ENTERED_DATA != "":
         IS_FUNCTION_ADDED = True
         await sent_callback_data(call, callback_data.text)
     else:
@@ -105,7 +105,7 @@ async def my_callback_foo(call: CallbackQuery, callback_data: Operation):
 @dp.callback_query(Operation.filter(F.text == " / "))
 async def my_callback_foo(call: CallbackQuery, callback_data: Operation):
     global IS_FUNCTION_ADDED
-    if not IS_FUNCTION_ADDED:
+    if not IS_FUNCTION_ADDED and ENTERED_DATA != "":
         IS_FUNCTION_ADDED = True
         await sent_callback_data(call, callback_data.text)
     else:
@@ -115,7 +115,7 @@ async def my_callback_foo(call: CallbackQuery, callback_data: Operation):
 @dp.callback_query(Operation.filter(F.text == " // "))
 async def my_callback_foo(call: CallbackQuery, callback_data: Operation):
     global IS_FUNCTION_ADDED
-    if not IS_FUNCTION_ADDED:
+    if not IS_FUNCTION_ADDED and ENTERED_DATA != "":
         IS_FUNCTION_ADDED = True
         await sent_callback_data(call, callback_data.text)
     else:
@@ -139,7 +139,7 @@ async def my_callback_foo(call: CallbackQuery, callback_data: Operation):
 @dp.callback_query(Operation.filter(F.text == " % "))
 async def my_callback_foo(call: CallbackQuery, callback_data: Operation):
     global IS_FUNCTION_ADDED
-    if "%" not in ENTERED_DATA and not IS_FUNCTION_ADDED:
+    if not IS_FUNCTION_ADDED and ENTERED_DATA != "":
         IS_FUNCTION_ADDED = True
         await sent_callback_data(call, callback_data.text)
     else:
@@ -149,7 +149,7 @@ async def my_callback_foo(call: CallbackQuery, callback_data: Operation):
 @dp.callback_query(Operation.filter(F.text == " pow "))
 async def my_callback_foo(call: CallbackQuery, callback_data: Operation):
     global IS_FUNCTION_ADDED
-    if "pow" not in ENTERED_DATA and not IS_FUNCTION_ADDED:
+    if not IS_FUNCTION_ADDED and ENTERED_DATA != "":
         IS_FUNCTION_ADDED = True
         await sent_callback_data(call, callback_data.text)
     else:
