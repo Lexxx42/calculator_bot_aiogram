@@ -11,7 +11,7 @@ Calculator https://github.com/Lexxx42/calculator is now a telegram bot
 
 ## С чего начать?
 
-1. Создать бота у бота отца https://t.me/Lexx_042
+1. Создать бота у бота отца https://t.me/BotFather
 2. Используя команду /newbot или через меню бота-отца
 3. добавляемся в разработчики в проект https://github.com/Lexxx42/calculator_bot_aiogram
 4. для этого надо мне прислать линк на профиль в гитхабе

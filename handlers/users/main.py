@@ -1,5 +1,5 @@
 import logging
-from calculator_bot_aiogram.loader import bot
+from loader import bot
 from aiogram import F
 from aiogram.filters import Command
 from aiogram.types import Message, CallbackQuery
