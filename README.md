@@ -1,6 +1,7 @@
 # calculator_bot_aiogram
 
 Calculator https://github.com/Lexxx42/calculator is now a telegram bot
+Coded with Python 3.11.1
 ---
 
 ## used libraries
