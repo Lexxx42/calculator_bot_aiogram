@@ -1,5 +1,5 @@
 from .operations import *
-from calculator_bot_aiogram.loader import logging
+from ..loader import logging
 
 ERROR_MESSAGE = "Input data is incorrect"
 
