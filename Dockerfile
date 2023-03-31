@@ -9,6 +9,7 @@ RUN set -eux; \
 	apt-get update; \
 	apt-get install -y --no-install-recommends \
         software-properties-common \
+        gnupg \
 	; \
     add-apt-repository --yes ppa:deadsnakes/ppa; \
     apt-get install -y --no-install-recommends \
