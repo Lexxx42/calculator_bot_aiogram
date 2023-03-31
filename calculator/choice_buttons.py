@@ -1,5 +1,5 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from calculator_bot_aiogram.calculator.callback_datas import MyCallback, Operation
+from .callback_datas import MyCallback, Operation
 
 choice = InlineKeyboardMarkup(
     inline_keyboard=[
