@@ -10,13 +10,13 @@ RUN set -eux; \
 	apt-get install -y --no-install-recommends \
         software-properties-common \
 	; \
+    add-apt-repository --yes ppa:deadsnakes/ppa; \
+    apt-get install -y --no-install-recommends \
+        python3.11 \
+        python3-pip \
+    ; \
 	rm -rf /var/lib/apt/lists/*
 
-RUN add-apt-repository --yes ppa:deadsnakes/ppa
-
-RUN apt-get install -y python3.11
-
-RUN apt-get python3-pip
 
 RUN touch .env
 
