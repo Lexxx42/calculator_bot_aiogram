@@ -1,7 +1,9 @@
 # calculator_bot_aiogram
 
 Calculator https://github.com/Lexxx42/calculator is now a telegram bot
+
 * Coded with Python 3.11.1
+
 ---
 
 ## used libraries
@@ -20,6 +22,7 @@ Calculator https://github.com/Lexxx42/calculator is now a telegram bot
    бота-отца.
 
 *Пример:*
+
 ``` shell
 BOT_TOKEN=ВАШ_ТОКЕН_ТЕЛЕГРАМА
 ```
@@ -69,4 +72,40 @@ Don't forget to save changes!
 
 ```shell
 docker-compose up --build
+```
+
+### Added docker image to public repository
+
+[Docker Hub](https://hub.docker.com/repository/docker/alex42konukhov/calculator-bot-aiogram/general)
+
+If you are using docker image from DockerHub use following commands:
+
+1. To pull repository use:
+
+```docker
+docker pull alex42konukhov/calculator-bot-aiogram:ubuntu
+```
+
+2. Create a container from the image. Should be an error message.
+
+```docker
+docker run alex42konukhov/calculator-bot-aiogram:ubuntu
+```
+
+3. Create `.env` file and add your telegram token
+
+```
+BOT_TOKEN=YOUR_BOT_TOKEN 
+```
+
+4. Copy the modified configuration file from your host machine to the container's file system:
+
+```docker
+docker cp .env docker_container_id:/calc-bot/.env
+```
+
+5. Run docker container in detached mode
+
+```docker
+docker start container_id
 ```
