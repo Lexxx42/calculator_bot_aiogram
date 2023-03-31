@@ -1,12 +1,10 @@
-import logging
-from calculator_bot_aiogram.loader import bot
+from .loader import logging, bot, dp
 from aiogram import F
 from aiogram.filters import Command
 from aiogram.types import Message, CallbackQuery
-from calculator_bot_aiogram.calc.controller import send_to_controller
-from calculator_bot_aiogram.keyboards.inline.callback_datas import MyCallback, Operation
-from calculator_bot_aiogram.keyboards.inline.choice_buttons import choice
-from calculator_bot_aiogram.loader import dp
+from .controller import send_to_controller
+from .callback_datas import MyCallback, Operation
+from .choice_buttons import choice
 
 IS_FUNCTION_ADDED = False
 ENTERED_DATA = ''
