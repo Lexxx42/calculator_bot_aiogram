@@ -21,7 +21,7 @@ Calculator https://github.com/Lexxx42/calculator is now a telegram bot
 
 *Пример:*
 ``` shell
-BOT_TOKEN=ВАШ_ТОКЕН_ТЕЛЕГРАМА  
+BOT_TOKEN=ВАШ_ТОКЕН_ТЕЛЕГРАМА
 ```
 
 # New features with docker
