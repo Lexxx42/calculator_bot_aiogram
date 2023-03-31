@@ -1,6 +1,6 @@
-from loader import bot
+from calculator_bot_aiogram.calculator.loader import bot
 
 if __name__ == "__main__":
-    from handlers import dp
+    from calculator_bot_aiogram.calculator.loader import dp
 
     dp.run_polling(bot)

@@ -1,5 +1,5 @@
+from .loader import logging
 from .operations import *
-from ..loader import logging
 
 ERROR_MESSAGE = "Input data is incorrect"
 
