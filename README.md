@@ -23,3 +23,50 @@ Calculator https://github.com/Lexxx42/calculator is now a telegram bot
 ``` shell
 BOT_TOKEN=ВАШ_ТОКЕН_ТЕЛЕГРАМА  
 ```
+
+# New features with docker
+
+## If there is an error about lack of access, add current user to the docker group:
+
+```shell
+sudo usermod -a -G docker [user]
+newgrp docker
+```
+
+## Use this sequence of commands to run the container:
+
+1. To run the application in docker, you need to install docker-compose:
+
+```shell
+sudo apt install docker-compose 
+```
+
+2. Clone the repository
+
+```shell
+git clone https://github.com/Lexxx42/calculator_bot_aiogram.git
+```
+
+3. Change directory to project dir
+
+```shell
+cd calculator_bot_aiogram/
+```
+
+4. Add your tokens for telegram bot and yandex weather
+
+```shell
+nano .env
+```
+
+```
+BOT_TOKEN=YOUR_BOT_TOKEN
+```
+
+Don't forget to save changes!
+
+5. Start the build
+
+```shell
+docker-compose up --build
+```
