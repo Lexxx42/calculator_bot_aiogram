@@ -1,5 +1,6 @@
 # base image
 FROM ubuntu
+ARG DEBIAN_FRONTEND=noninteractive
 
 # installing of work directory (by default) in image
 WORKDIR /calc-bot
