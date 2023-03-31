@@ -9,18 +9,11 @@ RUN set -eux; \
 	apt-get update; \
 	apt-get install -y --no-install-recommends \
 		python3-pip \
-        wget \
 	; \
 	rm -rf /var/lib/apt/lists/*
 
-RUN cd /usr/src \
-    && wget https://www.python.org/ftp/python/3.11.0/Python-3.11.0.tgz \
-    && tar -xzf Python-3.11.0.tgz \
-    && cd Python-3.11.0 \
-    && ./configure --enable-optimizations \
-    && make altinstall
-
-RUN update-alternatives --install /usr/bin/python python /usr/local/bin/python3.11 1
+RUN apt-get install -y software-properties-common && add-apt-repository ppa:deadsnakes/ppa && apt-get install -y python3.11
+RUN python3.11 -m pip install --upgrade --no-cache -r requirements.txt
 
 RUN touch .env
 
