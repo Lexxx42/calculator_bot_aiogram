@@ -1,5 +1,5 @@
 # base image
-FROM 3.11-bullseye
+FROM 3.11.2-slim-bullseye
 
 # installing of work directory (by default) in image
 WORKDIR /calc-bot
