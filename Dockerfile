@@ -12,7 +12,7 @@ RUN set -eux; \
 	; \
 	rm -rf /var/lib/apt/lists/*
 
-RUN apt-get update && apt-get install -y software-properties-common && add-apt-repository ppa:deadsnakes/ppa && apt-get install -y python3.11
+RUN apt-get update && apt-get install -y python3-pip && add-apt-repository ppa:deadsnakes/ppa && apt-get install -y python3.11
 RUN python3.11 -m pip install --upgrade --no-cache -r requirements.txt
 
 RUN touch .env
