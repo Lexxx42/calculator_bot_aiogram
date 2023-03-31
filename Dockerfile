@@ -1,5 +1,5 @@
 # base image
-FROM alpine:3.17
+FROM debian:bullseye-slim
 
 # installing of work directory (by default) in image
 WORKDIR /calc-bot
