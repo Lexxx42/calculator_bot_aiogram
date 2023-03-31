@@ -1,0 +1,15 @@
+# version of docker-compose
+version: '3'
+
+# services list
+services:
+    # we have only one (let's call it calc-bot)
+    calc-bot:
+        # build image with default settings (from Dockerfile) from current dir
+        build: .
+        stop_signal: SIGINT
+        # sending env vars from file .env to container
+        environment:
+            BOT_TOKEN: ${BOT_TOKEN}
+        # restart container if it down
+        restart: always
